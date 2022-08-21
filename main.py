@@ -29,7 +29,7 @@ def get_weather():
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
   res = requests.get(url).json()
   weather = res['data']['list'][0]
-  return weather['weather'], str(math.floor(weather['temp'])), math.floor(weather['high']), math.floor(weather['low'])
+  return weather['weather'], str(math.floor(weather['temp'])), str(math.floor(weather['high'])), str(math.floor(weather['low']))
 
 
 
@@ -90,8 +90,8 @@ wea, temperature, high, low = get_weather()
 #   low = str(low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！")
 data = {"weather" : {"value" : wea},
         "temperature" : {"value" : temperature + "℃"},
-        "high" : {"value" : high + "℃，" + "今天天气很热，注意防暑防晒哦！" if high >= 30 else high + "℃"},
-        "low" : {"value" : low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！" if low <= 15 else low + "℃"},
+        "high" : {"value" : high + "℃，" + "今天天气很热，注意防暑防晒哦！" if int(high) >= 30 else high + "℃"},
+        "low" : {"value" : low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！" if int(low) <= 15 else low + "℃"},
         "love_days" : {"value" : get_count()},
         "commemoration_days" : {"value" : get_commemorationDay()},
         "birthday_left" : {"value" : get_year()},
