@@ -84,14 +84,14 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature, high, low = get_weather()
-if high >= 30 :
-  high = str(high + "℃，" + "今天天气很热，注意防暑防晒哦！")
-if low <= 15 :
-  low = str(low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！")
+# if high >= 30 :
+#   high = str(high + "℃，" + "今天天气很热，注意防暑防晒哦！")
+# if low <= 15 :
+#   low = str(low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！")
 data = {"weather" : {"value" : wea},
         "temperature" : {"value" : temperature + "℃"},
-        "high" : {"value" : high},
-        "low" : {"value" : low},
+        "high" : {"value" : high + "℃，" + "今天天气很热，注意防暑防晒哦！" if high >= 30 else high + "℃"},
+        "low" : {"value" : low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！" if low <= 15 else low + "℃"},
         "love_days" : {"value" : get_count()},
         "commemoration_days" : {"value" : get_commemorationDay()},
         "birthday_left" : {"value" : get_year()},
