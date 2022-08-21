@@ -29,15 +29,7 @@ def get_weather():
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
   res = requests.get(url).json()
   weather = res['data']['list'][0]
-  high = weather['high']
-  if high >= 30 :
-    high = high + "今天天气很热，注意防暑防晒哦！"
-    return weather['weather'], math.floor(weather['temp']), high
-  elif high <= 15 :
-    high = high + "今天温度较低，记得多穿衣服，注意保暖哦！"
-    return weather['weather'], math.floor(weather['temp']), high
-  else :
-    return weather['weather'], math.floor(weather['temp']), high
+  return weather['weather'], math.floor(weather['temp']), math.floor(weather['high']), math.floor(weather['low'])
 
 
 
@@ -91,10 +83,15 @@ def get_random_color():
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
-wea, temperature, high = get_weather()
+wea, temperature, high, low = get_weather()
+if high >= 30 :
+  high = str(high + "℃，" + "今天天气很热，注意防暑防晒哦！")
+if low <= 15 :
+  low = str(low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！")
 data = {"weather" : {"value" : wea},
         "temperature" : {"value" : temperature + "℃"},
-        "high" : {"value" : high + "℃"},
+        "high" : {"value" : high},
+        "low" : {"value" : low},
         "love_days" : {"value" : get_count()},
         "commemoration_days" : {"value" : get_commemorationDay()},
         "birthday_left" : {"value" : get_year()},
