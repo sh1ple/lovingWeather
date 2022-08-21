@@ -11,7 +11,7 @@ today = datetime.now()
 start_date = os.environ['START_DATE']
 city = os.environ['CITY']
 birthday = os.environ['BIRTHDAY']
-commemoration_day = os.environ['COMM_DATE']
+comm_day = os.environ['COMM_DATE']
 
 # start_date = "2019-07-03"
 # city = "赣州"
@@ -43,7 +43,7 @@ def get_count():
 
 # 周年纪念日
 def get_commemorationDay():
-  next = datetime.strptime(str(date.today().year) + "-" + commemoration_day, "%Y-%m-%d")
+  next = datetime.strptime(str(date.today().year) + "-" + comm_day, "%Y-%m-%d")
   if next < datetime.now():
     next = next.replace(year=next.year + 1)
   return (next - today).days
