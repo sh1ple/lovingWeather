@@ -12,6 +12,7 @@ start_date = os.environ['START_DATE']
 city = os.environ['CITY']
 birthday = os.environ['BIRTHDAY']
 comm_date = os.environ['COMM_DATE']
+week_list = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"]
 
 # start_date = "2019-07-03"
 # city = "赣州"
@@ -79,6 +80,7 @@ def get_words():
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
+dates = str(today.strftime("%Y-%m-%d")) + " " + str(week_list[today.weekday()])
 
 client = WeChatClient(app_id, app_secret)
 
@@ -88,7 +90,8 @@ wea, temperature, high, low = get_weather()
 #   high = str(high + "℃，" + "今天天气很热，注意防暑防晒哦！")
 # if low <= 15 :
 #   low = str(low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！")
-data = {"weather" : {"value" : wea},
+data = {"date" : {"value" : dates},
+        "weather" : {"value" : wea},
         "temperature" : {"value" : temperature + "℃"},
         "high" : {"value" : high + "℃，" + "今天天气很热，注意防暑防晒哦！" if int(high) >= 30 else high + "℃"},
         "low" : {"value" : low + "℃，" + "今天温度较低，记得多穿衣服，注意保暖哦！" if int(low) <= 15 else low + "℃"},
