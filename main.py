@@ -68,6 +68,10 @@ def get_year(birthday=birthday):
     num = date.today().year - year
     year = year + num + 1
     return get_birthday(year, month, day)
+  else:
+    num = date.today().year - year
+    year = year + num
+    return get_birthday(year, month, day)
 
 
 #文字
